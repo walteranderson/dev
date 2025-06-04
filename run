@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+
+DRY_RUN="false"
+TARGET_OS=""
+GREP=""
+
+usage () {
+  echo "Usage: sudo $0 [--dry] [grep]"
+}
+
+if [ "$(id -u)" -ne 0 ]; then
+  echo "Must run as root"
+  usage
+  exit 1
+fi
+
+while [[ "$#" -gt 0 ]]; do
+  case "$1" in
+    --dry)
+      DRY_RUN="true"
+      shift
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    -*)
+      usage
+      exit 1
+      ;;
+    *)
+      break
+      exit 1
+      ;;
+  esac
+done
+
+if [[ "$#" -gt 0 ]]; then
+  if [[ "$#" -eq 1 ]]; then
+    GREP="$1"
+  else
+    usage
+    exit 1
+  fi
+fi
+
+KERNEL=$(uname -s)
+case "$KERNEL" in
+  Linux*)
+    TARGET_OS="linux"
+    ;;
+  Darwin*)
+    TARGET_OS="mac"
+    ;;
+  *)
+    echo "Error: unsupported operating system"
+    exit 1
+    ;;
+esac
+
+log () {
+  if [[ $DRY_RUN == "true" ]]; then
+    echo "[DRY RUN] $1"
+  else
+    echo "[RUN] $1"
+  fi
+}
+
+log "TARGET_OS: $TARGET_OS, DRY_RUN: $DRY_RUN, GREP: $GREP"
+log "======================================================================"
+
+scripts=$(find ./scripts/$TARGET_OS -mindepth 1 -maxdepth 1 -executable)
+
+for script in $scripts; do
+  if basename $script | grep -vq "$GREP"; then
+    log "SKIPPING $script"
+    continue
+  fi
+
+  log "RUNNING $script"
+  log "======================================================================"
+  if [[ $DRY_RUN == "false" ]]; then
+    $script
+  fi
+  log "======================================================================"
+done
