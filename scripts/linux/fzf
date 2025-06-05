@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-# https://github.com/junegunn/fzf
-
-sudo apt install fzf
