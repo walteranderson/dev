@@ -1,0 +1,18 @@
+[window]
+opacity = 0.25
+padding.x = 10
+padding.y = 10
+dynamic_padding = true
+
+[font]
+normal.family = "FuraMono Nerd Font"
+bold.family = "FuraMono Nerd Font"
+italic.family = "FuraMono Nerd Font"
+bold_italic.family = "FuraMono Nerd Font"
+size = 30
+
+[cursor]
+style = { shape = "Block", blinking = "Never" }
+
+[mouse]
+hide_when_typing = true

@@ -5,6 +5,15 @@
 VERSION="v0.11.2"
 FILENAME="nvim-linux-x86_64"
 
+if command -v /opt/nvim/bin/nvim &> /dev/null; then
+  current=$(/opt/nvim/bin/nvim --version | head -n 1 | awk '{print $2}')
+  if [ "$current" = "$VERSION" ]; then
+    echo "current version: $current, target version: $VERSION"
+    echo "skipping installation"
+    exit 0
+  fi
+fi
+
 curl -LO https://github.com/neovim/neovim/releases/download/${VERSION}/${FILENAME}.tar.gz
 sudo rm -rf /opt/nvim
 sudo tar -C /opt -xzf ${FILENAME}.tar.gz

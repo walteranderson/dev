@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 
-DRY_RUN="false"
 TARGET_OS=""
 GREP=""
 
 usage () {
-  echo "Usage: sudo $0 [--dry] [grep]"
+  echo "Usage: sudo $0 [grep]"
 }
 
 if [ "$(id -u)" -ne 0 ]; then
@@ -14,34 +13,11 @@ if [ "$(id -u)" -ne 0 ]; then
   exit 1
 fi
 
-while [[ "$#" -gt 0 ]]; do
-  case "$1" in
-    --dry)
-      DRY_RUN="true"
-      shift
-      ;;
-    -h|--help)
-      usage
-      exit 0
-      ;;
-    -*)
-      usage
-      exit 1
-      ;;
-    *)
-      break
-      exit 1
-      ;;
-  esac
-done
-
-if [[ "$#" -gt 0 ]]; then
-  if [[ "$#" -eq 1 ]]; then
-    GREP="$1"
-  else
-    usage
-    exit 1
-  fi
+if [[ "$#" -gt 1 ]]; then
+  usage
+  exit 1
+elif [[ "$#" -eq 1 ]]; then
+  GREP="$1"
 fi
 
 KERNEL=$(uname -s)
@@ -59,15 +35,12 @@ case "$KERNEL" in
 esac
 
 log () {
-  if [[ $DRY_RUN == "true" ]]; then
-    echo "[DRY RUN] $1"
-  else
-    echo "[RUN] $1"
-  fi
+  echo "[RUN] $1"
 }
 
-log "TARGET_OS: $TARGET_OS, DRY_RUN: $DRY_RUN, GREP: $GREP"
+log "TARGET_OS: $TARGET_OS, GREP: $GREP"
 log "======================================================================"
+log "RUNNING SCRIPTS"
 
 scripts=$(find ./scripts/$TARGET_OS -mindepth 1 -maxdepth 1 -executable)
 
@@ -79,8 +52,14 @@ for script in $scripts; do
 
   log "RUNNING $script"
   log "======================================================================"
-  if [[ $DRY_RUN == "false" ]]; then
-    $script
-  fi
+  $script
   log "======================================================================"
 done
+
+log "COPYING HOME"
+log "======================================================================"
+
+stow home -t ~/
+
+log "DONE!"
+log "======================================================================"
