@@ -20,4 +20,4 @@ sudo tar -C /opt -xzf ${FILENAME}.tar.gz
 sudo mv /opt/${FILENAME} /opt/nvim
 sudo ln -sf /opt/nvim/bin/nvim /usr/local/bin/nvim
 
-rm nvim-linux-x86_64.tar.gz
+rm ${FILENAME}.tar.gz
