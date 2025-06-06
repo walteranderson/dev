@@ -14,6 +14,10 @@ load_nvm() {
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 }
 
+# n - node version manager
+# https://github.com/tj/n
+export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin" 
+
 # https://github.com/junegunn/fzf
 source <(fzf --zsh)
 
@@ -30,9 +34,6 @@ fi
 # This section can be safely removed at any time if needed.
 [[ ! -r '/Users/walteranderson/.opam/opam-init/init.zsh' ]] || source '/Users/walteranderson/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
 # END opam configuration
-
-# asdf - https://asdf-vm.com/
-export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 
 # pnpm - https://pnpm.io/installation
 export PNPM_HOME="/home/walter/.local/share/pnpm"

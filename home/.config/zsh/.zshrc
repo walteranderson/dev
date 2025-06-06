@@ -6,7 +6,7 @@ export HISTFILE=~/.zsh_history
 export EDITOR='nvim'
 export DISABLE_AUTO_TITLE=true
 # export PATH="$PATH:/usr/local/go/bin:$HOME/.local/bin:$HOME/go/bin"
-export PATH="$PATH:/usr/local/go/bin:$HOME/bin"
+export PATH="$PATH:/usr/local/go/bin:$HOME/bin:$HOME/go/bin"
 
 alias ..='cd ..'
 alias ...='cd ../..'
