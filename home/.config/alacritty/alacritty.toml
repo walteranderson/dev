@@ -1,7 +1,7 @@
 [window]
-opacity = 0.25
-padding.x = 10
-padding.y = 10
+opacity = 0.95
+padding.x = 5
+padding.y = 5
 dynamic_padding = true
 
 [font]
@@ -9,7 +9,7 @@ normal.family = "FuraMono Nerd Font"
 bold.family = "FuraMono Nerd Font"
 italic.family = "FuraMono Nerd Font"
 bold_italic.family = "FuraMono Nerd Font"
-size = 30
+size = 16
 
 [cursor]
 style = { shape = "Block", blinking = "Never" }
