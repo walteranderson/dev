@@ -40,6 +40,16 @@ log () {
 
 log "TARGET_OS: $TARGET_OS, GREP: $GREP"
 log "======================================================================"
+log "COPYING HOME"
+log "======================================================================"
+
+log "stow -D home -t ~/"
+stow -D home -t ~/
+
+log "stow home -t ~/"
+stow home -t ~/
+
+log "======================================================================"
 log "RUNNING SCRIPTS"
 
 scripts=$(find ./scripts/$TARGET_OS -mindepth 1 -maxdepth 1 -executable)
@@ -55,11 +65,6 @@ for script in $scripts; do
   $script
   log "======================================================================"
 done
-
-log "COPYING HOME"
-log "======================================================================"
-
-stow home -t ~/
 
 log "DONE!"
 log "======================================================================"
